@@ -145,10 +145,3 @@ Here is the structured breakdown of your Git operations:
 
 ---
 
-### **Summary of Operations:**
-1. **Created and initialized a Git repository.**
-2. **Created two feature branches (`branch1`, `branch2`) from `master`.**
-3. **Performed various Git operations including stash, reset (soft/hard), diff, and branch management.**
-4. **Added a remote GitHub repository, merged branches, and pushed changes to GitHub.**
-
-Feel free to ask if you need further clarifications!
