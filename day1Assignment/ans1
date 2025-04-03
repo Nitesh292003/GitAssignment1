@@ -21,3 +21,134 @@ nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git commit -m "1 commit"
 [master (root-commit) 43c232e] 1 commit
  1 file changed, 1 insertion(+)
  create mode 100644 README.md
+ 
+ ----------------------------------------------------------------------------------------------------------------------------
+Ques-2 Create at least 2 feature branches from the main branch (Add multiple files)  - 
+Add commits on each feature branch.
+
+>Git Branch--->
+
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git branch
+* master
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git branch Branch1
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git branch
+  Branch1
+* master
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git checkout Branch1
+Switched to branch 'Branch1'
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ vi file1
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git add file1
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git status
+On branch Branch1
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	new file:   file1
+
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git commit -m "my hobbies"
+[Branch1 4f650aa] my hobbies
+ 1 file changed, 4 insertions(+)
+ create mode 100644 file1
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git branch
+* Branch1
+  master
+
+
+
+
+
+
+
+
+         
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git checkout -b Branch2
+Switched to a new branch 'Branch2'
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git branch
+  Branch1
+* Branch2
+  master
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ vi file2.txt
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git status
+On branch Branch2
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	file2.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git add .
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git commit -m "my subjects"
+[Branch2 88ea5b5] my subjects
+ 1 file changed, 3 insertions(+)
+ create mode 100644 file2.txt  
+
+
+
+
+ ----------------------------------------------------------------------------------------------------------------------------
+
+
+Ques 3-Try these commands, stash, reset soft, reset hard, diff, branch -d & -D - push each branch to the remote -
+ Diff -
+ nitesh@nitesh-Latitude-3450:~/Assignment-Git$ vi file2.txt
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git diff
+diff --git a/file2.txt b/file2.txt
+index 3ab45d3..2cd1fdd 100644
+--- a/file2.txt
++++ b/file2.txt
+@@ -1,3 +1,5 @@
+ Subject
+ java
+ react
++springboot
++spring
+
+
+                      -------------------------------------------------------------------
+Reset -
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git status
+On branch Branch2
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   file2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git add .
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git status
+On branch Branch2
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   file2.txt
+
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$  git reset file2.txt
+Unstaged changes after reset:
+M	file2.txt
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git status
+On branch Branch2
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   file2.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+
+----------------------------------------------------------------------------------------------------------------------
+
+Log-
+nitesh@nitesh-Latitude-3450:~/Assignment-Git$ git log
+commit 3b54ad1aa031d4a0b490c2bd9f019b4b7f7f05d8 (HEAD -> Branch2)
+Author: nitesh292003 <nitesh.singh@joshsoftware.com>
+Date:   Wed Apr 2 17:25:26 2025 +0530
+
+    new subject added
+
+commit 88ea5b5aac400cec758bb5f1171cf9b26dcf89fd
+Author: nitesh292003 <nitesh.singh@joshsoftware.com>
+Date:   Wed Apr 2 17:09:13 2025 +0530
+
+    my subjects
+
+commit 43c232e68001b48244d1a4b475c27f15f8b2e509 (master)
+Author: nitesh292003 <nitesh.singh@joshsoftware.com>
+Date:   Wed Apr 2 16:52:50 2025 +0530
+
