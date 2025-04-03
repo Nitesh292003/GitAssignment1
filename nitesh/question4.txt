@@ -1,0 +1,129 @@
+Q4. How to delete one commit or multiple commits permanently Write a command for it. 
+ans-### **How to Delete One or Multiple Commits Permanently in Git**
+
+Deleting commits in Git can be done by **rewriting history**. There are a few ways to permanently delete one or multiple commits, but the most common ways are through **git reset** and **git rebase**.
+
+#### **1. Delete the Most Recent Commit (Using `git reset`)**
+
+If you want to **delete the most recent commit** permanently (i.e., you don't want it in your history and you don't want to keep any changes from it), you can use `git reset` with the `--hard` option.
+
+To delete the most recent commit:
+
+```bash
+git reset --hard HEAD~1
+```
+
+- **`HEAD~1`** means "one commit before the current `HEAD`".
+- **`--hard`** means that not only will the commit be removed from the history, but all the changes in that commit will also be discarded from your working directory.
+
+#### **Explanation:**
+- **`HEAD~1`**: This tells Git to reset the state of the repository to one commit before the current `HEAD`.
+- **`--hard`**: This option resets both the commit history and the working directory to the state it was at that commit. This means the files modified by that commit will be lost permanently.
+
+#### **Example:**
+
+If you have the following commit history:
+
+```
+C1 - Commit 1
+C2 - Commit 2
+C3 - Commit 3 (HEAD)
+```
+
+After running `git reset --hard HEAD~1`, commit **C3** will be deleted and the history will look like this:
+
+```
+C1 - Commit 1
+C2 - Commit 2
+```
+
+#### **2. Delete Multiple Commits (Using `git reset`)**
+
+If you want to delete **multiple commits**, you can specify how many commits to go back using `HEAD~N`, where `N` is the number of commits you want to go back.
+
+For example, to delete the last 3 commits:
+
+```bash
+git reset --hard HEAD~3
+```
+
+This will remove the last 3 commits and reset your working directory to the state before those commits.
+
+#### **3. Delete a Specific Commit (Using `git rebase`)**
+
+If the commit you want to delete is not the most recent one, you can use **interactive rebase** to delete it. This is useful when you want to remove commits that are not the latest.
+
+##### Steps to Delete a Specific Commit:
+
+1. Start an interactive rebase:
+
+   ```bash
+   git rebase -i HEAD~N
+   ```
+
+   Here, `N` is the number of commits back from `HEAD` that you want to include in the rebase. For example, `HEAD~5` will let you edit the last 5 commits.
+
+2. In the interactive rebase screen, you'll see a list of commits:
+
+   ```
+   pick <commit_hash> Commit 1
+   pick <commit_hash> Commit 2
+   pick <commit_hash> Commit 3
+   pick <commit_hash> Commit 4
+   pick <commit_hash> Commit 5
+   ```
+
+3. To **delete a commit**, simply replace `pick` with `drop` next to the commit you want to delete. For example:
+
+   ```
+   pick <commit_hash> Commit 1
+   drop <commit_hash> Commit 2
+   pick <commit_hash> Commit 3
+   pick <commit_hash> Commit 4
+   pick <commit_hash> Commit 5
+   ```
+
+4. Save and exit the editor.
+
+5. Git will rewrite the commit history, and the commit you dropped will be permanently deleted.
+
+#### **4. Force Pushing After Deleting Commits (for Shared Repositories)**
+
+If you've already pushed the commits to a remote repository (e.g., GitHub, GitLab) and want to **delete commits remotely**, you will need to **force push** the changes.
+
+For example, if you've deleted commits locally using `git reset`, you can force push the changes to the remote repository:
+
+```bash
+git push origin <branch_name> --force
+```
+
+**Important Warning:**
+- **Force pushing** rewrites history on the remote repository. This can cause issues for others working on the same branch, so use this with caution.
+- It's generally recommended to only force push to branches that are **not shared** with others, or after coordinating with your team.
+
+#### **5. Delete Commits Using `git reflog` (in case of mistakes)**
+
+If you make a mistake and want to recover a commit after a `git reset`, you can use `git reflog` to find the commit reference and restore it.
+
+To see the reflog, run:
+
+```bash
+git reflog
+```
+
+This will display a history of all actions in your Git repository, including commit resets. You can then reset your repository to any of those points using:
+
+```bash
+git reset --hard <commit_hash_from_reflog>
+```
+
+### **Conclusion**
+
+To delete **one or multiple commits** permanently:
+
+- Use `git reset --hard HEAD~1` to delete the **most recent commit**.
+- Use `git reset --hard HEAD~N` to delete the **last N commits**.
+- Use `git rebase -i HEAD~N` and `drop` the commit(s) you want to delete to remove a **specific commit**.
+- After modifying history, if you've pushed to a shared repository, use `git push origin <branch_name> --force` to push the changes.
+
+Always be cautious when deleting commits, especially when working in a shared repository, as this can disrupt the work of others if not handled carefully.

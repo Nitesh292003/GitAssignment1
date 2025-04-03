@@ -1,0 +1,130 @@
+Q3. How to combine two commits into one commit? For Example, you have 4 different commits C1, C2, C3, and  C4, and you to combine C2 and C3 into one single commit.
+
+ans-### **Combining Two Commits into One Commit in Git**
+
+In Git, if you want to combine two commits into a single commit, you can use **interactive rebase**. Interactive rebasing allows you to rewrite Git history, including squashing (combining) commits.
+
+In this example, we want to combine commits **C2** and **C3** into one commit, leaving **C1** and **C4** unchanged.
+
+### **Steps to Combine Two Commits (C2 and C3) into One Commit**
+
+Here’s how you can do it:
+
+#### Step 1: Start an Interactive Rebase
+
+First, you need to initiate an interactive rebase starting from the commit before **C2**. To do this, you use the `git rebase -i` command. In your case, if you have commits C1, C2, C3, and C4, you will specify the commit just before **C2**, which is **C1**.
+
+To begin, run the following command:
+
+```bash
+git rebase -i HEAD~3
+```
+
+Explanation:
+- `HEAD~3` refers to the third commit from the latest commit, which is **C1** in this case. The idea is to interactively rebase the last three commits (C1, C2, C3).
+- If you want to rebase further back, adjust the number `3` accordingly.
+
+#### Step 2: Choose Which Commits to Squash
+
+After running the command, Git will open an editor showing a list of the most recent commits in the repository. The list will look something like this:
+
+```
+pick <commit_hash> C1
+pick <commit_hash> C2
+pick <commit_hash> C3
+```
+
+Here, `<commit_hash>` represents the commit hashes for each of the commits.
+
+Now, to combine **C2** and **C3**, change the word `pick` for **C3** to `squash` or simply `s` (which tells Git to squash C3 into C2). The modified list should look like this:
+
+```
+pick <commit_hash> C1
+pick <commit_hash> C2
+squash <commit_hash> C3
+```
+
+#### Step 3: Save and Exit the Editor
+
+After making the changes, save and exit the editor:
+- If you are using **Vim**, press `Esc`, then type `:wq` and hit `Enter`.
+- If you are using **Nano**, press `Ctrl + X`, then press `Y` to confirm saving, and press `Enter` to exit.
+
+#### Step 4: Edit the Commit Message
+
+Git will now combine **C2** and **C3** into one commit and open an editor asking you to edit the commit message for the new, combined commit.
+
+The default commit message will look something like this:
+
+```
+# This is a combination of 2 commits.
+# The first commit's message is:
+
+C2
+
+# The second commit's message is:
+
+C3
+```
+
+You can edit this message to create a new, meaningful commit message for the combined commit. For example, you can write:
+
+```
+Combine C2 and C3: [new description of combined changes]
+```
+
+After editing the commit message, save and exit the editor again.
+
+#### Step 5: Complete the Rebase
+
+Git will now apply the changes and complete the rebase. You’ll have successfully combined commits **C2** and **C3** into a single commit.
+
+#### Step 6: Verify the Changes
+
+To verify that the rebase worked as expected, you can check your commit history:
+
+```bash
+git log --oneline
+```
+
+You should see that commits **C2** and **C3** have been replaced with a single combined commit, and the history will look something like this:
+
+```
+<new_commit_hash> Combined commit for C2 and C3
+<commit_hash> C1
+<commit_hash> C4
+```
+
+### **Handling Conflicts (if any)**
+
+In case there are any merge conflicts during the rebase, Git will pause the rebase process and give you the opportunity to resolve the conflicts.
+
+1. Resolve the conflict in the affected files.
+2. After resolving the conflict, add the resolved files to the staging area using `git add <file>`.
+3. Continue the rebase process with:
+
+   ```bash
+   git rebase --continue
+   ```
+
+4. If you want to abort the rebase for any reason, you can always use:
+
+   ```bash
+   git rebase --abort
+   ```
+
+### **Important Notes**
+
+- **Interactive rebase** rewrites commit history, so it's advisable not to use it on commits that have already been pushed to a shared repository unless you are sure that no one else is working on the same branch.
+- You can squash multiple commits into a single commit by following the same steps, just applying `squash` to all but the first commit you want to keep.
+
+### **Conclusion**
+
+To summarize, the steps for combining two commits into one are:
+
+1. Use `git rebase -i` with `HEAD~3` to start an interactive rebase.
+2. Change `pick` to `squash` for the commit you want to combine.
+3. Edit the commit message when prompted.
+4. Complete the rebase and verify the changes.
+
+This way, you can combine commits in a clean and controlled manner. 
