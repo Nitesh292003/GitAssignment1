@@ -1,0 +1,76 @@
+Q1. What is cherry-pick? Explain the use case of it and also write steps to do it.
+ans-In Git, cherry-pick is a command that allows you to apply the changes from a specific commit (or a set of commits) from one branch into another branch. Unlike merging or rebasing, which usually integrate all changes from one branch into another, cherry-picking allows you to select specific commits and apply them to the current branch.
+
+This command is particularly useful when you want to bring in bug fixes or features from another branch without merging all the changes from that branch.
+
+Use Case of Cherry-Pick
+The main use case for cherry-pick is when you want to:
+
+Apply a specific commit to a different branch: For example, if a bug fix was made on the feature-branch and you want to apply that specific commit to the master branch without bringing in the other changes on feature-branch.
+
+Pick a commit from a different branch after a merge conflict: If a conflict arises during a merge or rebase, you may choose to cherry-pick only the good commits and leave out problematic ones.
+
+Applying a fix across multiple branches: For example, if a hotfix needs to be applied to multiple long-lived branches (like master and release), you can cherry-pick the commit across those branches.
+
+Steps to Cherry-Pick a Commit in Git
+Let’s break down the process of using cherry-pick with a step-by-step guide:
+
+1. Identify the Commit You Want to Cherry-Pick
+First, you need to find the commit hash (SHA) of the commit you want to apply.
+
+You can use git log to find the commit hash:
+
+bash
+Copy
+git log
+Example output:
+
+sql
+Copy
+commit 3f9e5c1b5e2115dfb3a712ba5ad6829467f72f68 (HEAD -> feature-branch)
+Author: John Doe <johndoe@example.com>
+Date:   Wed Apr 1 10:00:00 2025 +0530
+
+    Fix bug in login feature
+In this example, the commit hash is 3f9e5c1b5e2115dfb3a712ba5ad6829467f72f68.
+
+2. Switch to the Target Branch
+Make sure you're on the branch where you want to apply the commit (e.g., master or develop).
+
+bash
+Copy
+git checkout master
+3. Run the Cherry-Pick Command
+Use the git cherry-pick command followed by the commit hash you identified earlier:
+
+bash
+Copy
+git cherry-pick 3f9e5c1b5e2115dfb3a712ba5ad6829467f72f68
+Git will apply the changes from that commit to your current branch.
+
+4. Resolve Conflicts (if any)
+If there are conflicts between the commit you are cherry-picking and the current branch, Git will notify you and you will need to resolve them manually.
+
+After resolving the conflicts in the files, add the resolved files:
+
+bash
+Copy
+git add <file>
+Then, continue the cherry-pick process:
+
+bash
+Copy
+git cherry-pick --continue
+5. Commit the Changes (if there were conflicts)
+If there were no conflicts, the cherry-pick will be applied automatically and committed. If you resolved conflicts, you will need to complete the commit manually by running:
+
+bash
+Copy
+git commit
+6. Push the Changes
+Finally, push the changes to your remote repository:
+
+bash
+Copy
+git push origin master
+
