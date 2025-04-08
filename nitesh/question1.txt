@@ -1,0 +1,11 @@
+Q1. What is cherry-pick? Explain the use case of it and also write steps to do it.
+ans- cherry pick is used to make changes from one branch to another just like merge but instead of changing all the commits or saving in cherry pick we just choose the commit we want to change in the another branch or only the changes we want in the one branch from another branch.
+use case - when we want only some changes from one branch to another branch instead of all the changes or the commits.
+steps-
+1 - git log (get the commit id  of the branch you want to make canges in the anoter branch)
+2- git checkout branch-name(branch you want to make changes)
+3-git cherry-pick commit-id
+4-git add . (resolve if any conflict is there)
+5 - git cherry-pick --continue
+6 git push origin branch-name
+

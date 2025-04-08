@@ -1,0 +1,12 @@
+Q5. Difference between --force push and --force-with-lease, You have to show the use of both, also you have to show in what scenario --force-with-lease is used.
+ 
+ans-git -- force adn --force-with-lease both are used in git to force push the changes to a remote repository but they both are different.
+ 
+ -- force it is unsafe force push  because it overwrites the remote repository with your local branch regardless what other have pushed 
+it will discard and changes on the remote branch that dare not present in your local branch
+-> git push origin main --force
+
+ 
+--force-with-lease it is safer force push it ensure the push is only succesfull if no one else has pushed change to the branch since you last pulled
+->git push origin main --force-with-lease
+
